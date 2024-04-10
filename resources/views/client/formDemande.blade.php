@@ -208,14 +208,11 @@
 
         <div class="form-group">
             <label for="typeService">Type de service demandé</label>
-            <select id="typeService" name="typeService" required>
-                <option value="">Sélectionnez un type de service</option>
-                <option value="peintre">Peintre</option>
-                <option value="electricien">Electricien</option>
-                <option value="menuisier">Menuisier</option>
-                <option value="plombier">Plombier</option>
-                <option value="reparateur">Réparateur électroménager</option>
-                <!-- Add other options as necessary -->
+            <select id="typeService" name="service_id" required>
+                <option value="Sélectionnez un type de service">Sélectionnez un type de service</option>
+                @foreach ($services as $service)
+                <option value="{{ $service->id }}">{{ $service->nom }}</option>
+                @endforeach
             </select>
         </div>
             <div class="form-group">

@@ -176,7 +176,7 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="#" class="navbar-logo">DailyAide🔔</a>
+        <a href="/dashboard" class="navbar-logo">DailyAide🔔</a>
         <div class="navbar-links">
             <a href="{{ route('client.demande') }}" class="button-demander">Demander un service</a>
             <a href="#" class="navbar-link">🔔</a>
@@ -208,14 +208,11 @@
 
         <div class="form-group">
             <label for="typeService">Type de service demandé</label>
-            <select id="typeService" name="typeService" required>
+            <select id="typeService" name="service_id" required>
                 <option value="Sélectionnez un type de service">Sélectionnez un type de service</option>
-                <option value="garde chez le petsitter">garde chez le petsitter</option>
-                <option value="garde chez le propritete">garde chez le propritete</option>
-                <option value="Visite a domicile">Visite a domicile</option>
-                <option value="pPromenade chien">Promenade chien</option>
-                <option value="Toilettage chien">Toilettage chien</option>
-                <!-- Add other options as necessary -->
+                @foreach ($services as $service)
+                <option value="{{ $service->id }}">{{ $service->nom }}</option>
+                @endforeach
             </select>
         </div>
             <div class="form-group">

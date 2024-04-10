@@ -54,8 +54,13 @@ Route::delete('/demandes/{id}', [DemandeServiceController::class, 'destroy'])->n
 
 Route::get('/demandes/{demande}', [DemandeServiceController::class, 'show'])->name('demande.show');
 
-Route::get('/partners-listing', [PartnerListingController::class,'index'] );
+
+//afficher la liste des prtenaires pour le selectionner
+
+Route::get('/partners-listing', [PartnerListingController::class,'index'] )->name('select.partenaire');
 Route::get('/partners-listing/{id}', [PartnerListingController::class,'show'] );
+Route::post('/finalize-demande', [DemandeServiceController::class, 'finalizeDemande'])->name('finalize.demande');
+
 
 
 

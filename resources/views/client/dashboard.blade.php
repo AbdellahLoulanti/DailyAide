@@ -9,7 +9,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/dashboard.css"> <!-- Lien vers votre fichier CSS -->
-
+    <link rel="icon" href="images/favicon.ico" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+            integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <script src="//unpkg.com/alpinejs" defer></script>
+        <script src="https://cdn.tailwindcss.com"></script>
     <title>Tableau de Bord</title>
 
 </head>
@@ -245,8 +254,13 @@ display: block; /* Affiche le menu déroulant au survol */
                 <a href="{{ route('client.MesDemandes') }}" style="text-decoration: none;color:black">Mes demandes</a>
             </div>
             <div class="sidebar-item">
-                <span class="sidebar-icon">↩️</span>
-                <a href="{{ route('home') }}" style="text-decoration: none;color:black">Se déconnecter</a>
+                
+    
+                    <form class="inline" method="POST" action="/logout">
+                    @csrf
+                    <button type="submit"><i class="fa-solid fa-door-closed"></i>  Se déconnecter</button>
+                    </form>
+                
             </div>
         </div>
 
@@ -256,7 +270,7 @@ display: block; /* Affiche le menu déroulant au survol */
             <div class="dashboard-header">
                 <h1  style="margin-left:120px;margin-top:-8px;">Vous n'avez pas de demande en cours</h1>
                 <p style="margin-left:150px;margin-top:-3px;">Créez votre demande gratuitement et recevez rapidement des offres !</p>
-                <a href="{{ route('client.demande') }}" style="margin-left:300px;">Demander un service</a>
+                <a href="{{ route('client.demande') }}" style="margin-left:300px;" >Demander un service</a>
             </div>
 
             <!-- Features Section -->
