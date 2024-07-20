@@ -1,20 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\Service;
-
 use Illuminate\Http\Request; // Correct namespace
 use App\Models\Client;
 use App\Models\DemandeService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Partenaire;
+use App\Mail\PartenaireNotification;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ServiceRequestCreated;
+
+
 
 class DemandeServiceController extends Controller
 {
     public function formDemande()
 {
-    $client = Auth::guard('client')->user(); 
+    $client = Auth::guard('client')->user();
     // Assurez-vous que le guard 'client' est configuré correctement
     $services = Service::where('categorie', 'bricolage')->get();
     return view('client.formDemande',compact('client','services')); // retourne la vue de connexion
@@ -36,25 +42,32 @@ public function formDemandeMenage()
 }
 public function formDemandeCours()
 {
-    $client = Auth::guard('client')->user(); 
+    $client = Auth::guard('client')->user();
     // Assurez-vous que le guard 'client' est configuré correctement
     $services = Service::where('categorie', 'cours')->get();
 
     return view('client.formCours',compact('client','services')); // retourne la vue de connexion
 }
+public function service()
+{
+    return $this->belongsTo(Service::class, 'service_id');
+}
+
 public function MesDemandes()
 {
     // Assurez-vous que l'utilisateur est connecté avant de faire une requête.
 
     $client = Auth::guard('client')->user(); // Assurez-vous que le guard 'client' est configuré correctement
-
     $client_id = Auth::guard('client')->id();
-    $demandes = DemandeService::where('client_id', $client_id)->get();
-
+    $demandes = DemandeService::with('service')
+    ->where('client_id', $client_id)
+    ->get();
     return view('client.MesDemandes', compact('demandes','client'));// Renvoie la vue avec les demandes de l'utilisateur
 }
+
+
 // public function store(Request $request)
-// {
+ //{
 
 //     // Validation des données
 //     $validatedData = $request->validate([
@@ -103,8 +116,9 @@ public function destroy($id)
 
 public function show($id)
 {
+    $client = Auth::guard('client')->user();
     $demande = DemandeService::findOrFail($id);
-    return view('client.showDemande', compact('demande'));
+    return view('client.showDemande', compact('demande','client'));
 }
 
 
@@ -112,6 +126,7 @@ public function store(Request $request)
 {
     // Stocker les données du formulaire dans la session
     $request->session()->put('formAnimauxData', $request->all());
+
     // Rediriger pour choisir un partenaire
     return redirect()->route('select.partenaire');
 }
@@ -120,13 +135,13 @@ public function finalizeDemande(Request $request)
 {
     // Récupérer les données du formulaire stockées dans la session
     $formData = $request->session()->get('formAnimauxData');
+    // Vérification de l'existence des données essentielles
 
     // Récupérer l'ID du partenaire à partir du corps de la requête POST
     $partenaireId = $request->input('partenaire_id');
 
     // Ajouter l'ID du partenaire aux données du formulaire
     $formData['partenaire_id'] = $partenaireId;
-
     $formData['client_id'] = Auth::guard('client')->id();  // S'assurer que l'utilisateur est connecté
     $formData['date'] = $formData['date'] ?? now();
     $formData['statut'] = $formData['statut'] ?? 'en_attente';
@@ -148,6 +163,10 @@ public function finalizeDemande(Request $request)
     // Créer la demande de service avec les données complètes
     $demandeService = new DemandeService($formData);
     $demandeService->save();
+
+    $partenaire = Partenaire::find($formData['partenaire_id']);
+    // Envoyer l'email
+    Mail::to($partenaire->email)->send(new ServiceRequestCreated($demandeService));
 
     // Nettoyer la session après l'utilisation
     $request->session()->forget('formAnimauxData');

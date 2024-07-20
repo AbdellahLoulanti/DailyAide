@@ -2,8 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client_Controller;
+use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\DemandeServiceController;
 use App\Http\Controllers\PartnerListingController;
+use App\Http\Controllers\PartenaireController;
+use Egulias\EmailValidator\Parser\Comment;
+
 
 Route::get('/', function () {
     return view('index');
@@ -31,6 +35,9 @@ Route::get('/dashboard', [Client_Controller::class, 'dashboard'])->name('client.
 Route::get('/profil', [Client_Controller::class, 'showProfile'])->name('client.profile')->middleware('auth:client');
 
 Route::get('/demande', [Client_Controller::class, 'demande'])->name('client.demande');
+
+
+Route::post('/comments', [CommentaireController::class, 'store'])->name('comment.store');
 
 Route::get('/formDemandeBricolage', [DemandeServiceController::class, 'formDemande'])->name('client.formDemande');
 
@@ -63,13 +70,51 @@ Route::post('/finalize-demande', [DemandeServiceController::class, 'finalizeDema
 
 
 
+//expirt
+// Route to show the signup form
+Route::get('/partenaire/signup', [PartenaireController::class, 'create'])->name('partenaire.create');
+
+// Route to handle form submission
+Route::post('/partenaire/signup', [PartenaireController::class, 'store'])->name('partenaire.store');
+
+Route::get('/partenaire/login', [PartenaireController::class, 'showLoginForm'])->name('partenaire.login');
+
+Route::post('/partenaire/login', [PartenaireController::class, 'login'])->name('partenaire.login.submit');
+
+Route::get('/partenaire/dashboard', [PartenaireController::class, 'dashboard'])->name('partenaire.dashboard');
+
+Route::get('/partenaire/profile', [PartenaireController::class, 'showProfile'])->name('partenaire.profile')->middleware('auth:Partenaire');
+
+Route::get('/partenaire/edit', [PartenaireController::class,'edit'] )->name('partenaire.edit-profile');
+//Update Listing
+Route::put('/partenaire/edit', [PartenaireController::class,'update'] )->name('partenaire.update-profile');
+
+Route::get('/partenaire/change-password', [PartenaireController::class,'editPasswordform'] )->name('partenaire.editPasswordform');
+
+Route::post('/partenaire/change-password', [PartenaireController::class,'editPassword'] )->name('partenaire.editPassword');
+
+Route::get('/partenaire/edit_categories', [PartenaireController::class,'edit_categories'] )->name('partenaire.edit_categories');
+
+Route::post('/partenaire/edit_categories', [PartenaireController::class, 'editCategories'])->name('partenaire.editCategories');
+
+Route::get('/partenaire/all-requests', [PartenaireController::class, 'allRequests'])->name('partenaire.all-requests');
 
 
+Route::post('/partenaire/requests/{id}/accept', [PartenaireController::class, 'acceptRequest'])->name('partenaire.accept');
+
+Route::post('/partenaire/requests/{id}/reject', [PartenaireController::class, 'rejectRequest'])->name('partenaire.reject');
 
 
+Route::get('/appointment', [PartenaireController::class, 'appointment'])->name('partenaire.appointment');
 
 
+Route::get('/partenaire/{id}/profile', [PartenaireController::class, 'showProfileforpart'])->name('partenaire.profilcl');
 
+Route::post('/partenaire/appointments/{appointment}/complete', [PartenaireController::class, 'completeAppointment'])->name('partenaire.appointment.complete');
+
+Route::get('/partenaire/historique', [PartenaireController::class, 'historique'])->name('partenaire.historique');
+
+Route::post('/partenaire/commentaire', [PartenaireController::class, 'storeCommentaire'])->name('partenaire.commentaire.store');
 
 
 

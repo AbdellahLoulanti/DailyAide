@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Partenaire extends Model
+class Partenaire extends Authenticatable
 {
 
     use HasFactory;
+    protected $table = 'partenaires'; // Ensure this is correctly set
+
     protected $fillable = [
-        'partenaire_id','service_id','nom','prenom','domaine_expertise', 'email', 'password','telephone' ,'region', 'description', 'disponibilite', 'tarif','model_pricing',
+        'partenaire_id','service_id','nom','prenom','image','domaine_expertise', 'email', 'password','telephone' ,'region', 'services', 'disponibilite','model_pricing','expertise_years',
     ];
 
     public function scopeFilter($query, array $filters){
@@ -29,9 +32,13 @@ class Partenaire extends Model
         return $this->hasMany(DemandeService::class, 'partenaire_id');
     }
 
+    // public function services()
+    // {
+    //     return $this->belongsToMany(Service::class, 'service_id');
+    // }
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'service_id');
+        return $this->belongsToMany(Service::class, 'services', 'partenaire', 'service_id');
     }
 }
 

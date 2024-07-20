@@ -28,7 +28,7 @@
     </div>
     <div class="button-group">
         <button onclick="history.back()" class="button btn-secondary">Retour</button>
-        <a href="/client/edit" class="button btn-primary"  style="text-decoration: none; border: none;">Modifier</a>
+        
     </div>
 
 </div>

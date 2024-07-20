@@ -18,17 +18,18 @@ class PartenaireFactory extends Factory
     public function definition()
     {
         return [
+            'id' => $this->faker->unique()->numberBetween(1, 100),
             'nom' => $this->faker->lastName,
             'prenom' => $this->faker->firstName,
-            'domaine_expertise' => $this->faker->word,
+            'image' => $this->faker->imageUrl(640, 480, 'people'),
+            'domaine_expertise' => $this->faker->randomElement(['Plomberie', 'Électricité', 'Jardinage', 'Ménage']),
             'email' => $this->faker->unique()->safeEmail,
-            'password' => $this->faker->password,
+            'password' => bcrypt('password'), // Default password
             'telephone' => $this->faker->phoneNumber,
-            'region' => $this->faker->city,
-            'description' => $this->faker->paragraph,
+            'region' => $this->faker->randomElement(['Île-de-France', 'Nouvelle-Aquitaine', 'Occitanie', 'Auvergne-Rhône-Alpes']),
             'disponibilite' => $this->faker->boolean,
-            'tarif' => $this->faker->numberBetween(100, 1000),
-            'model_pricing' => $this->faker->randomElement(['hourly', 'fixed']),
+            'model_pricing' => $this->faker->randomElement(['par heure', 'par travaille']),
+            'expertise_years' => $this->faker->numberBetween(1, 20)
         ];
     }
 }

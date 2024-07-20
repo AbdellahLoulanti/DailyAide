@@ -14,5 +14,9 @@ class Client extends Authenticatable
     {
         return $this->hasMany(DemandeService::class, 'client_id');
     }
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class, 'id_cli');
+    }
 }
 

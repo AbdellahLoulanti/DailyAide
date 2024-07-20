@@ -12,8 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('commentaires', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id();  // Primary key
+            $table->unsignedBigInteger('id_cli');  // Foreign key to the clients table
+            $table->unsignedBigInteger('id_part');  // Foreign key to the partenaires table
+            $table->unsignedBigInteger('id_dem_ser');  // Foreign key to the demande_services table
+            $table->text('commentaire');  // Text of the comment
+            $table->string('sendby');  // Identifier of who sent the comment
+            $table->timestamp('date_saisie')->useCurrent();  // Timestamp for when the comment was made
+
+            
+            $table->timestamps();  // Laravel default timestamps for created_at and updated_at
         });
     }
 

@@ -1,8 +1,8 @@
 <x-layout>
-   
+
     <div class="container mx-auto p-6">
-        <div class="text-center mb-10">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mt-4 mb-2 shadow-lg">
+        <div class="text-center mb-8" >
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mt-4 mb-2 shadow-lg" >
                 DailyAide, <span class="text-laravel">simplifiez le bricolage!</span>
               </h1>
               <p class="text-lg text-gray-600 mt-6">Rejoignez la communauté où le bricolage devient un plaisir partagé.</p>
@@ -12,11 +12,11 @@
             <a href="/client/login" class="bg-laravel text-white px-4 py-2 rounded hover:bg-laravel-600 transition ease-in-out duration-150">
                 Demandez un service
             </a>
-            <a href="#" class="bg-white text-gray-800 px-4 py-2 rounded hover:bg-gray-800 hover:text-white transition ease-in-out duration-150 border border-gray-800">
+            <a href="/partenaire/login" class="bg-white text-gray-800 px-4 py-2 rounded hover:bg-gray-800 hover:text-white transition ease-in-out duration-150 border border-gray-800">
                 Proposer mes services
             </a>
         </div>
-        
+
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14">
             <!-- Hardcoded content for each service provider with reviews -->
@@ -80,7 +80,7 @@
             </div>
             <!-- ... -->
         </div>
-        
+
     </div>
     <div class="bg-gray-100 py-8 mt-12">
         <div class="container mx-auto px-6 text-center">
@@ -89,6 +89,6 @@
         </div>
     </div>
 
-   
+
 
 </x-layout>

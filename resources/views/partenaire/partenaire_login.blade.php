@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!-- ... -->
-    <title>Client Login Form</title>
+    <title>Formulaire de connexion expert</title>
     <link rel="stylesheet" href="{{asset('cssfiles/login.css')}}" >
 
 </head>
@@ -18,7 +18,7 @@
 </div>
 @endif
     <div class="container">
-        <h1>Client Login Form</h1>
+        <h1>Formulaire de connexion expert</h1>
 
         @if (session('error'))
             <div class="alert alert-danger">
@@ -26,17 +26,17 @@
             </div>
         @endif
 
-        <form action="{{ route('client.login.submit') }}" method="POST">
+        <form action="{{ route('partenaire.login.submit') }}" method="POST">
             @csrf
-            <label for="email">Email Address</label>
+            <label for="email">Adresse e-mail</label>
             <input type="email" id="email" name="email" required>
 
-            <label for="password">Password</label>
+            <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password" required>
 
-            <input type="submit" value="Login">
+            <input type="submit" value="Se connecter">
         </form>
-        <p>Don't have an account? <a href="{{ route('client.create') }}">Sign up here</a>.</p>
+        <p>Don't have an account? <a href="{{ route('partenaire.create') }}">Sign up here</a>.</p>
 
     </div>
 </body>

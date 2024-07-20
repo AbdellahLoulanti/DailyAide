@@ -14,21 +14,24 @@
         <h1>Profil de {{ $client->prenom }}</h1>
     </div>
     <div class="profile-picture">
+<!-- <img src="{{ asset('storage/' . $client->image) }}" alt="Profile Image"> -->
 <img src="{{ asset('storage/' . $client->image) }}" alt="Profile Image">
+
     </div>
     <div class="profile-info">
-        <div><strong>Nom:</strong> {{ Auth::guard('client')->user()->nom }}</div>
-<div><strong>Prénom:</strong> {{ Auth::guard('client')->user()->prenom }}</div>
-<div><strong>Email:</strong> {{ Auth::guard('client')->user()->email }}</div>
-<div><strong>Téléphone:</strong> {{ Auth::guard('client')->user()->telephone }}</div>
-<div><strong>Adresse:</strong> {{ Auth::guard('client')->user()->adresse }}</div>
-<div><strong>Région:</strong> {{ Auth::guard('client')->user()->region }}</div>
+    <div><strong>Nom:</strong> {{ $client->nom }}</div>
+<div><strong>Prénom:</strong> {{ $client->prenom }}</div>
+<div><strong>Email:</strong> {{ $client->email }}</div>
+<div><strong>Téléphone:</strong> {{ $client->telephone }}</div>
+<div><strong>Adresse:</strong> {{ $client->adresse }}</div>
+<div><strong>Région:</strong> {{ $client->region }}</div>
+
 
         <!-- Ajoutez ici d'autres informations du profil si nécessaire -->
     </div>
     <div class="button-group">
         <button onclick="history.back()" class="button btn-secondary">Retour</button>
-        <a href="/client/edit" class="button btn-primary"  style="text-decoration: none; border: none;">Modifier</a>
+        
     </div>
 
 </div>

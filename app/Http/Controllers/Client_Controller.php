@@ -162,6 +162,11 @@ public function logout(Request $request){
 
      return redirect('/')->with('message','You\'ve been logged out');
 }
+public function showProfileforpart($id)
+{
+    $client = Client::findOrFail($id); // Fetch the client
+    return view('client.profilecl', compact('client')); // Assuming you have a view for this
+}
 
 
 }
